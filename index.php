@@ -7,8 +7,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // The description of the authorization method is available here: https://developers.sumsub.com/api-reference/#app-tokens
 // Don't forget to change token and secret key values to production ones when switching to production
-const SUMSUB_SECRET_KEY = 'ges28mM8LWbeJXTpzXsFKMvTt3kFKKP2'; // Example: Hej2ch71kG2kTd1iIUDZFNsO5C1lh5Gq
-const SUMSUB_APP_TOKEN = 'sbx:TviqWZ39ged4M9pjyOCl4mck.MeI6f7BAZ1qWUxQq6rDI9xoYXCkVjkH0'; // Example: sbx:uY0CgwELmgUAEyl4hNWxLngb.0WSeQeiYny4WEqmAALEAiK2qTC96fBad
+$sumsub_secret_key = $_POST["SUMSUB_SECRET_KEY"]; // Example: Hej2ch71kG2kTd1iIUDZFNsO5C1lh5Gq
+$sumsub_app_token = $_POST["SUMSUB_APP_TOKEN"]; // Example: sbx:uY0CgwELmgUAEyl4hNWxLngb.0WSeQeiYny4WEqmAALEAiK2qTC96fBad
 
 // The description of the flow can be found here: https://developers.sumsub.com/api-flow/#api-integration-phases
 
@@ -18,10 +18,10 @@ const SUMSUB_APP_TOKEN = 'sbx:TviqWZ39ged4M9pjyOCl4mck.MeI6f7BAZ1qWUxQq6rDI9xoYX
 // 3) Getting applicant status
 // 4) Getting access token
 
-$externalUserId = uniqid(); // Use your internal UserID instead in production code
-$levelName = 'basic-kyc-level';
+$externalUserId = $_POST["USER_ID"]; // Use your internal UserID instead in production code
+$levelName = $_POST["LEVEL_NAME"];
 
-$testObject = new SumsubClient(SUMSUB_APP_TOKEN, SUMSUB_SECRET_KEY);
+$testObject = new SumsubClient($sumsub_app_token, $sumsub_secret_key);
 
 $externalLink = $testObject->getExternalLink($externalUserId, $levelName);
 echo $externalLink["url"];
