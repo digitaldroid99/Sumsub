@@ -20,11 +20,20 @@ $sumsub_app_token = $_POST["SUMSUB_APP_TOKEN"]; // Example: sbx:uY0CgwELmgUAEyl4
 
 $externalUserId = $_POST["USER_ID"]; // Use your internal UserID instead in production code
 $levelName = $_POST["LEVEL_NAME"];
+$method = $_POST["METHOD"];
+$timestamp = $_POST["TIMESTAMP"];
 
 $testObject = new SumsubClient($sumsub_app_token, $sumsub_secret_key);
 
-$externalLink = $testObject->getExternalLink($externalUserId, $levelName);
-echo $externalLink["url"];
+// $externalLink = $testObject->getExternalLink($externalUserId, $levelName);
+// echo $externalLink["url"];
+
+$now = time();
+$url = $_POST["URL"];
+$request = new GuzzleHttp\Psr7\Request($method, $url);
+$signature = $testObject->createSignature($request, intval($timestamp));
+
+echo $signature;
 return;
 
 $applicantId = $testObject->createApplicant($externalUserId, $levelName);

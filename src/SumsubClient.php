@@ -154,7 +154,7 @@ class SumsubClient
         }
     }
 
-    protected function createSignature(RequestInterface $request, int $ts): string
+    public function createSignature(RequestInterface $request, int $ts): string
     {
         return hash_hmac('sha256', $ts . strtoupper($request->getMethod()) . $request->getUri() . $request->getBody(), $this->secretKey);
     }
